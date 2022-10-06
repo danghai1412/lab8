@@ -9,6 +9,7 @@ const mongoose = require("mongoose");
 const studentModel = require("./models/StudentSchema");
 //url connection string (local db)
 const url = "mongodb://localhost:27017/greenwich";
+// Greenwich là tên của database
 //url connection string (cloud db)
 //const url =
 mongoose.connect(url, { useNewUrlParser: true }, (err) => {
@@ -36,12 +37,7 @@ app.get("/add", (req, res) => {
   //res.render("output", { student: req.body });
 
   //tạo object student chứa dữ liệu nhập từ form
-  var student = new studentModel({
-    name: req.body.name,
-    age: req.body.age,
-    email: req.body.email,
-    image: req.body.image,
-  });
+  var student = new studentModel(req.body);
   //lưu object student vào database
   student.save((err) => {
     if (err) {
@@ -95,4 +91,6 @@ app.get("/student", (req, res) => {
   });
 });
 
-app.listen(port);
+app.listen(port, () => {
+console.log("Sever is running at http://localhost:3000");
+});
